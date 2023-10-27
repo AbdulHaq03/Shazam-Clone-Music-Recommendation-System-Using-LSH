@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload MP3 File</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+    <link rel="icon" href="/static/play_1.png" type="image/x-icon">
+    <style>
+        body {
+            background-image: url('/static/image.png');
+            background-size: cover;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        h1 {
+			font-size: 3em;
+			margin-bottom: 30px;
+			color: #444;
+			text-shadow: 1px 1px #fff;
+		}
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .custom-file-upload {
+            display: inline-block;
+            padding: 20px 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 16px;
+            text-justify: auto;
+            text-align: center;
+        }
+        #file-name {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        #upload-status {
+            margin-top: 10px;
+            font-size: 18px;
+            color: green;
+        }
+        #more-recommendations {
+            display: none;
+            max-width: 600px;
+            margin-top: 0 auto;
+            text-align: center;
+            margin: 0 auto;
+        }
+        .more-recommendations-btn {
+            padding: 12px 30px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 0 auto;
+            display: block;
+            margin-top: 50px;
+            margin-bottom: 100px;
+        }
+        audio {
+            display: block;
+            margin: 0 auto;
+        }
+        .glow-on-hover {
+        width: 220px;
+        height: 60px;
+        border: none;
+        outline: none;
+        font-family: 'Courier New', Courier, monospace;
+        color: #e41eb6;
+        background: #111;
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 5px;
+        font-size: medium;
+    }
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}       
+.btn {
+  width: 200px;
+  height: 25px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #91C9FF;
+  outline: none;
+  transition: 1s ease-in-out;
+  margin: 0 auto;
+}
+.btn_sub {
+  width: 190px;
+  height: 40px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #91C9FF;
+  outline: none;
+  transition: 1s ease-in-out;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  fill: none;
+  stroke: #fff;
+  stroke-dasharray: 150 480;
+  stroke-dashoffset: 150;
+  transition: 1s ease-in-out;
+}
+
+.btn:hover {
+  transition: 1s ease-in-out;
+  background: #4F95DA;
+}
+
+.btn:hover svg {
+  stroke-dashoffset: -480;
+}
+
+.btn span {
+  color: white;
+  font-size: 18px;
+  font-weight: 200;
+}
+
+.btn_sub:hover {
+  transition: 1s ease-in-out;
+  background: #4F95DA;
+}
+
+.btn_sub:hover svg {
+  stroke-dashoffset: -480;
+}
+
+.btn_sub span {
+  color: white;
+  font-size: 18px;
+  font-weight: 200;
+}
+
+.container p {
+  border: 1px round black;
+  background-color: #f39ddf;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+.play-btn {
+  display: inline-block;
+  background-color: #fff;
+  color: #333;
+  border: 2px solid #333;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.play-btn:hover {
+  background-color: #333;
+  color: #fff;
+}
+audio:hover, audio:focus, audio:active
+{
+-webkit-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+-moz-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+-webkit-transform: scale(1.05);
+-moz-transform: scale(1.05);
+transform: scale(1.05);
+}
+
+audio
+{
+-webkit-transition:all 0.5s linear;
+-moz-transition:all 0.5s linear;
+-o-transition:all 0.5s linear;
+transition:all 0.5s linear;
+-moz-box-shadow: 2px 2px 4px 0px #006773;
+-webkit-box-shadow:  2px 2px 4px 0px #006773;
+box-shadow: 2px 2px 4px 0px #006773;
+-moz-border-radius:7px 7px 7px 7px ;
+-webkit-border-radius:7px 7px 7px 7px ;
+border-radius:7px 7px 7px 7px ;
+}
+
+audio::-webkit-media-controls-panel{
+    background-color: rgb(237, 100, 230);
+}
+audio::-webkit-media-controls-play-button{
+    background-color: rgb(20, 178, 231);
+    border-radius: 50%;
+}
+audio::-webkit-media-controls-current-time-display{
+    color: #050505;
+}
+audio::-webkit-media-controls-time-remaining-display{
+    color: #070707;
+}
+audio::-webkit-media-controls-timeline{
+    border-radius: 40px;
+    background-color: lightblue;
+}
+audio::-webkit-media-controls-volume-slider{
+    background-color: lightblue;
+    border-radius: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+audio::-webkit-media-controls-mute-button{
+    background-color: lightblue;
+    border-radius: 50%;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload MP3 File</h1>
+        <form action="/music" method="post" enctype="multipart/form-data">
+            <label for="file-upload" class="custom-file-upload glow-on-hover">Choose File</label>
+            <input id="file-upload"  accept=".mp3,audio/*" type="file" name="mp3file" onchange="updateFileName()">
+            <button class="glow-on-hover" type="button" onclick="togglePlayer()">SEE META DATA</button>
+            <audio id="audio-form" class="audioplay" controls>
+                <source src="" type="audio/mpeg">
+            </audio>
+            <p id="title" style="display:none;"></p>
+            <p id="artist" style="display:none;"></p>
+            <p id="album" style="display:none;"></p>
+            <p id="genre" style="display:none;"></p>
+            <div id="file-name"></div>
+            <input class="glow-on-hover" type="submit" value="Recommend" name="submit">
+        </form>
+
+        {% if filename %}
+        <p>{{ string_1 }}</p>
+        <p>Title: {{ title }}</p>
+        <p>Artist: {{ artist }}</p>
+        <p>Album: {{ album }}</p>
+        <p>Genre: {{ genre }}</p>
+            <audio controls>
+                <source src="{{ url_for('static', filename='Data/' + filename) }}" type="audio/mpeg">
+            </audio>
+        {% endif %} 
+        {% if filename_1 %}
+        <p>{{ string_2 }}</p>
+        <p>Title: {{ title_1 }}</p>
+        <p>Artist: {{ artist_1 }}</p>
+        <p>Album: {{ album_1 }}</p>
+        <p>Genre: {{ genre_1 }}</p>
+            <audio controls>
+                <source src="{{ url_for('static', filename='Data/' + filename_1) }}" type="audio/mpeg">
+            </audio>
+        {% endif %}
+
+    </div>
+    <div id="more-recommendations">
+        {% if title_2 or title_3 %}
+        <p>Title: {{ title_2 }}</p>
+        <p>Artist: {{ artist_2 }}</p>
+        <p>Album: {{ album_2 }}</p>
+        <p>Genre: {{ genre_2 }}</p>
+        {% if filename_2 %}
+            <audio controls>
+                <source src="{{ url_for('static', filename='Data/' + filename_2) }}" type="audio/mpeg">
+            </audio>
+        {% endif %} 
+        {% if title_3 %}
+        <p>Title: {{ title_3 }}</p>
+        <p>Artist: {{ artist_3 }}</p>
+        <p>Album: {{ album_3 }}</p>
+        <p>Genre: {{ genre_3 }}</p>
+        {% if filename_3 %}
+            <audio controls>
+                <source src="{{ url_for('static', filename='Data/' + filename_3) }}" type="audio/mpeg">
+            </audio>
+        {% endif %} 
+        {% else %}
+        <p>NO SECOND RECOMMENDATION</p>
+        {% endif %}
+        {% else %}
+        <p>No more recommendations available</p>
+        {% endif %}
+    </div>
+    <button class="more-recommendations-btn glow-on-hover" onclick="showMoreRecommendations()">Show more recommendations</button>
+</div>
+
+    <script>
+        const audioForm = document.getElementById('audio-form');
+        const playBtn = document.querySelector('.play-btn');
+        function updateFileName() {
+            var input = document.getElementById('file-upload');
+            var output = document.getElementById('file-name');
+            output.innerText = input.files[0].name;
+
+            var file = document.getElementById("file-upload").files[0];
+            var audio = document.getElementById("audio-form");
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                audio.src = e.target.result;
+                audio.play();
+            };
+            reader.readAsDataURL(file);
+        }
+        function showMoreRecommendations() {
+            var moreRecommendations = document.getElementById("more-recommendations");
+            var moreRecommendationsBtn = document.querySelector(".more-recommendations-btn");
+            if (moreRecommendations.style.display === "none") {
+            moreRecommendations.style.display = "block";
+            moreRecommendationsBtn.innerHTML = "Hide more recommendations";
+            } else {
+            moreRecommendations.style.display = "none";
+            moreRecommendationsBtn.innerHTML = "Show more recommendations";
+            }
+        }
+        const jsmediatags = window.jsmediatags;
+      
+        document.querySelector("#file-upload").addEventListener("change", (event) => {
+  
+        const song = event.target.files[0]
+        jsmediatags.read(song, {
+            onSuccess: function(tag) {
+                console.log(tag)
+                document.querySelector("#title").textContent = "Title: " + tag.tags.title 
+                document.querySelector("#artist").textContent = "Artist: " + tag.tags.artist
+                document.querySelector("#album").textContent = "Album: " + tag.tags.album
+                document.querySelector("#genre").textContent = "Genre: " + tag.tags.genre
+                },
+                onError: function(error) {
+                console.log(error)
+                }
+            })
+        });
+        function togglePlayer() {
+            var player = document.getElementById("audio-form");
+            var title = document.getElementById("title");
+            var artist = document.getElementById("artist");
+            var album = document.getElementById("album");
+            var genre = document.getElementById("genre");
+            var fileName = document.getElementById("file-name");
+
+            if (player.paused) {
+                player.play();
+                title.style.display = "block";
+                artist.style.display = "block";
+                album.style.display = "block";
+                genre.style.display = "block";
+                fileName.style.display = "none";
+            } else {
+                player.pause();
+                title.style.display = "none";
+                artist.style.display = "none";
+                album.style.display = "none";
+                genre.style.display = "none";
+                fileName.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>

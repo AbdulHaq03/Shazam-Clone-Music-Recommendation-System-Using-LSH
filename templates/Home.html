@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home Page</title>
+	<link rel="icon" href="/static/play_1.png" type="image/x-icon">
+	<style>
+        *{
+            font-family: 'Courier New', Courier, monospace;
+        }
+		body {
+			background-image: url('/static/image.png');
+			font-family: 'Courier New', Courier, monospace;
+			text-align: center;
+			margin-top: 50px;
+		}
+
+		h1 {
+			font-size: 3em;
+			margin-bottom: 30px;
+			color: #444;
+			text-shadow: 1px 1px #fff;
+		}
+
+		button.glow-on-hover {
+			font-size: 1.5em;
+			background: linear-gradient(to bottom right, #1ab1c5, #981eda);
+			color: white;
+			border: none;
+			padding: 15px 20px;
+			border-radius: 10px;
+			cursor: pointer;
+			box-shadow: 0 0 20px #eee;
+			transition: all 0.3s ease-in-out;
+		}
+
+		button.glow-on-hover:hover {
+			background: linear-gradient(to bottom right, #19d8e6, #dc21ba);
+			box-shadow: 0 0 40px #eee;
+			transform: scale(1.05);
+		}
+
+		.btn-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+		}
+
+		.btn-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background-color: rgba(148, 234, 245, 0.8);
+			border-radius: 5px;
+			box-shadow: 0 0 20px #d55bc0;
+			padding: 30px;
+		}
+
+		.btn-description {
+			font-size: 1.2em;
+			margin-bottom: 20px;
+			color: #555;
+		}
+	</style>
+</head>
+<body>
+	<div class="btn-container">
+		<div class="btn-wrapper">
+			<h1>Welcome to the Home Page</h1>
+			<div class="btn-description">PLAY THE MOMENT</div>
+			<a href="/music"><button class="glow-on-hover">Go to Music Page</button></a>
+		</div>
+	</div>
+</body>
+</html>
